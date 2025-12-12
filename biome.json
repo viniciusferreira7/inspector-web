@@ -1,0 +1,94 @@
+{
+	"$schema": "https://biomejs.dev/schemas/2.2.0/schema.json",
+	"vcs": {
+		"enabled": true,
+		"clientKind": "git",
+		"useIgnoreFile": true
+	},
+	"files": {
+		"ignoreUnknown": true,
+		"includes": [
+			"**",
+			"!node_modules",
+			"!.next",
+			"!dist",
+			"!build",
+			"!coverage",
+			"!playwright-report"
+		]
+	},
+	"formatter": {
+		"enabled": true,
+		"indentStyle": "space",
+		"indentWidth": 2,
+		"lineWidth": 100,
+		"lineEnding": "lf"
+	},
+	"linter": {
+		"enabled": true,
+		"rules": {
+			"recommended": true,
+			"suspicious": {
+				"noUnknownAtRules": "off",
+				"noArrayIndexKey": "off"
+			},
+			"style": {
+				"useImportType": "warn",
+				"useConst": "error",
+				"useTemplate": "warn",
+				"noNegationElse": "warn"
+			},
+			"complexity": {
+				"noForEach": "off",
+				"useLiteralKeys": "warn",
+				"useArrowFunction": "warn"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "off",
+				"useHookAtTopLevel": "error"
+			},
+			"performance": {
+				"noAccumulatingSpread": "warn",
+				"noDelete": "warn"
+			},
+			"nursery": {
+				"useSortedClasses": {
+					"level": "error",
+					"fix": "safe",
+					"options": {
+						"attributes": ["className"],
+						"functions": ["cx"]
+					}
+				}
+			}
+		},
+		"domains": {
+			"next": "recommended",
+			"react": "recommended"
+		}
+	},
+	"javascript": {
+		"formatter": {
+			"quoteStyle": "double",
+			"trailingCommas": "es5",
+			"semicolons": "always",
+			"arrowParentheses": "always",
+			"bracketSpacing": true,
+			"bracketSameLine": false,
+			"quoteProperties": "asNeeded",
+			"attributePosition": "auto"
+		}
+	},
+	"json": {
+		"formatter": {
+			"trailingCommas": "none"
+		}
+	},
+	"assist": {
+		"actions": {
+			"source": {
+				"organizeImports": "on"
+			}
+		}
+	}
+}
