@@ -1,12 +1,14 @@
 import { Link } from "@tanstack/react-router";
 import { Trash2Icon } from "lucide-react";
+import { Checkbox } from "./ui/checkbox";
 import { IconButton } from "./ui/icon-button";
 
 export function WebHooksListItem() {
   return (
     <div className="group rounded-lg transition-colors duration-150 hover:bg-zinc-700/30">
       <div className="flex items-start gap-3 px-4 py-3.5">
-        <Link to="/" className="flex min-w-0 flex-1 items-center gap-3">
+        <Checkbox />
+        <Link to="/" className="flex min-w-0 flex-1 items-start gap-3">
           <span className="w-12 shrink-0 text-right font-mono font-semibold text-xs text-zinc-300">
             POST
           </span>
