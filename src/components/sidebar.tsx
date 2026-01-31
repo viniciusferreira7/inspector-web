@@ -1,3 +1,7 @@
+import { CopyIcon } from "lucide-react";
+import { IconButton } from "./ui/icon-button";
+import { WebhooksList } from "./webhooks-list";
+
 export function Sidebar() {
   return (
     <div className="flex h-screen flex-col">
@@ -13,7 +17,9 @@ export function Sidebar() {
             https://localhost:8080/swagger-ui/index.html#/
           </span>
         </div>
+        <IconButton icon={<CopyIcon className="size-4" />} />
       </div>
+      <WebhooksList />
     </div>
   );
 }
