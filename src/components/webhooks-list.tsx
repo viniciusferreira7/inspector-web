@@ -16,5 +16,3 @@ export function WebhooksList() {
     </div>
   );
 }
-
-//TODO: 34:44 https://app.rocketseat.com.br/classroom/desafio-full-stack-com-ia
