@@ -3,6 +3,7 @@ import { Group, Panel, Separator } from "react-resizable-panels";
 import { SectionDataTable } from "../components/section-data-table";
 import { SectionTitle } from "../components/section-title";
 import { Sidebar } from "../components/sidebar";
+import { CodeBlock } from "../components/ui/code-block";
 import { WebhookDetailsHeader } from "../components/webhook-details-header";
 
 export const Route = createFileRoute("/")({
@@ -42,7 +43,29 @@ function Index() {
                   <SectionDataTable data={overviewData} />
                 </div>
                 <div className="space-y-4">
-                  <SectionTitle>Body</SectionTitle>
+                  <SectionTitle>Request Body</SectionTitle>
+                  <CodeBlock
+                    code='  <Panel defaultSize="80%" minSize="60%" maxSize="75%">
+          <div className="flex h-full flex-col">
+            <WebhookDetailsHeader />
+            <div className="flex overflow-y-auto">
+              <div className="w-full space-y-6 p-6">
+                <div className="space-y-4">
+                  <SectionTitle>Request Overview</SectionTitle>
+                  <SectionDataTable data={overviewData} />
+                </div>
+                <div className="space-y-4">
+                  <SectionTitle>Query parameters</SectionTitle>
+                  <SectionDataTable data={overviewData} />
+                </div>
+                <div className="space-y-4">
+                  <SectionTitle>Headers</SectionTitle>
+                  <SectionDataTable data={overviewData} />
+                </div>
+                <div className="space-y-4">
+                  <SectionTitle>Request Body</SectionTitle>'
+                    language="typescript"
+                  />
                 </div>
               </div>
             </div>
