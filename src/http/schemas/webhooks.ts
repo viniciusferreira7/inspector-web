@@ -4,7 +4,10 @@ export const webhookListItemSchema = z.object({
   id: z.uuidv7(),
   method: z.string(),
   pathname: z.string(),
-  created_at: z.coerce.date(),
+  createdAt: z.coerce.date(),
 });
 
-export const webhookListSchema = z.array(webhookListItemSchema);
+export const webhookListSchema = z.object({
+  webhooks: z.array(webhookListItemSchema),
+  nextCursor: z.uuidv7().nullable(),
+});
