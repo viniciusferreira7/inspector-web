@@ -1,23 +1,37 @@
 import { Link } from "@tanstack/react-router";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 import { Trash2Icon } from "lucide-react";
+import { z } from "zod";
+import type { webhookListItemSchema } from "../http/schemas/webhooks";
 import { Checkbox } from "./ui/checkbox";
 import { IconButton } from "./ui/icon-button";
 
-export function WebHooksListItem() {
+dayjs.extend(relativeTime);
+
+interface WebhookListItemProps {
+  webhook: z.infer<typeof webhookListItemSchema>;
+}
+
+export function WebHooksListItem({ webhook }: WebhookListItemProps) {
   return (
     <div className="group rounded-lg transition-colors duration-150 hover:bg-zinc-700/30">
       <div className="flex items-start gap-3 px-4 py-3.5">
         <Checkbox />
-        <Link to="/" className="flex min-w-0 flex-1 items-start gap-3">
+        <Link
+          to="/"
+          search={{ q: webhook.id }}
+          className="flex min-w-0 flex-1 items-start gap-3"
+        >
           <span className="w-12 shrink-0 text-right font-mono font-semibold text-xs text-zinc-300">
-            POST
+            {webhook.method}
           </span>
           <div className="min-w=0 flex-1">
             <p className="truncate text-shadow-2xs text-zinc-200 leading-tight">
-              /video/status
+              {webhook.pathname}
             </p>
             <p className="mt-1 font-medium text-xs text-zinc-500">
-              1 minute ago
+              {dayjs(webhook.createdAt).fromNow()}
             </p>
           </div>
         </Link>
