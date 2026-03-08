@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Trash2Icon } from "lucide-react";
-import { z } from "zod";
+import type z from "zod";
 import type { webhookListItemSchema } from "../http/schemas/webhooks";
 import { Checkbox } from "./ui/checkbox";
 import { IconButton } from "./ui/icon-button";
@@ -20,7 +20,7 @@ export function WebHooksListItem({ webhook }: WebhookListItemProps) {
         <Checkbox />
         <Link
           to="/"
-          search={{ q: webhook.id }}
+          search={{ webhook_id: webhook.id }}
           className="flex min-w-0 flex-1 items-start gap-3"
         >
           <span className="w-12 shrink-0 text-right font-mono font-semibold text-xs text-zinc-300">
