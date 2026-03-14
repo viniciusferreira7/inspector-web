@@ -1,9 +1,26 @@
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "@tanstack/react-router";
 import { CopyIcon } from "lucide-react";
 import { Suspense } from "react";
+import { env } from "../env";
+import { webhookDetails } from "../http/schemas/webhook-details";
 import { IconButton } from "./ui/icon-button";
 import { WebhooksList, WebhooksListSkeleton } from "./webhooks-list";
 
 export function Sidebar() {
+  const { id } = useParams({
+    from: "/webhooks/$id/",
+  });
+  const { data, isLoading } = useQuery({
+    queryKey: ["webhooks", id],
+    queryFn: async () => {
+      const response = await fetch(`${env.VITE_API_URL}/webhooks/${id}`);
+      const json = await response.json();
+
+      return webhookDetails.parse(json);
+    },
+  });
+
   return (
     <div className="flex h-screen flex-col">
       <div className="flex items-center justify-between border-zinc-700 border-b px-4 py-5">
@@ -14,9 +31,13 @@ export function Sidebar() {
       </div>
       <div className="flex items-center justify-between border-zinc-700 border-b bg-zinc-800 px-4 py-2.5">
         <div className="flex min-w-0 flex-1 items-center gap-1 font-mono text-xs text-zinc-300">
-          <span className="truncate">
-            https://localhost:8080/swagger-ui/index.html#/
-          </span>
+          {isLoading ? (
+            <div className="h-3.5 w-48 animate-pulse rounded bg-zinc-700" />
+          ) : (
+            <span className="truncate">
+              {env.VITE_API_URL}/{data?.pathname}
+            </span>
+          )}
         </div>
         <IconButton icon={<CopyIcon className="size-4" />} />
       </div>
