@@ -8,8 +8,8 @@ export const webhookDetails = z.object({
   statusCode: z.number().min(100).max(599),
   contentType: z.string(),
   contentLength: z.number(),
-  queryParams: z.string(),
-  headers: z.string(),
+  queryParams: z.record(z.string(), z.unknown()),
+  headers: z.record(z.string(), z.unknown()),
   body: z.string(),
   createdAt: z.coerce.date(),
 });
