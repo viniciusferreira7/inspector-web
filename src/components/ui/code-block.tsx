@@ -16,26 +16,12 @@ export function CodeBlock({
   const [parsedCode, setParsedCode] = useState<string | null>(null);
 
   useEffect(() => {
-    async function highlight() {
-      if (!code) return;
-
-      let formatted = code;
-
-      if (language === "json") {
-        try {
-          formatted = JSON.stringify(JSON.parse(code), null, 2);
-        } catch {}
-      }
-
-      const html = await codeToHtml(formatted, {
+    if (code) {
+      codeToHtml(code, {
         lang: language,
         theme: "vesper",
-      });
-
-      setParsedCode(html);
+      }).then((code) => setParsedCode(code));
     }
-
-    highlight();
   }, [code, language]);
 
   return (
