@@ -1,4 +1,5 @@
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect, useRef } from "react";
 import { env } from "../env";
 import { webhookListSchema } from "../http/schemas/webhooks";
 import { WebHooksListItem } from "./webhooks-list-item";
@@ -33,22 +34,53 @@ export function WebhooksListSkeleton() {
 }
 
 export function WebhooksList() {
-  const { data } = useSuspenseQuery({
-    queryKey: ["webhooks"],
-    queryFn: async () => {
-      const response = await fetch(`${env.VITE_API_URL}/webhooks`);
-      const data = await response.json();
+  const observerRef = useRef<HTMLDivElement>(null);
 
-      return webhookListSchema.parse(data);
-    },
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery({
+      queryKey: ["webhooks"],
+      queryFn: async ({ pageParam }) => {
+        const url = new URL(`${env.VITE_API_URL}/webhooks`);
+        url.searchParams.set("limit", "20");
+        if (pageParam) url.searchParams.set("cursor", pageParam);
+
+        const response = await fetch(url.toString());
+        const json = await response.json();
+
+        return webhookListSchema.parse(json);
+      },
+      initialPageParam: undefined as string | undefined,
+      getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    });
+
+  useEffect(() => {
+    const el = observerRef.current;
+    if (!el) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
+
+  const webhooks = data?.pages.flatMap((page) => page.webhooks) ?? [];
 
   return (
     <div className="flex-1 overflow-y-auto">
       <div className="space-y-1 p-2">
-        {data.webhooks.map((webhook) => (
+        {webhooks.map((webhook) => (
           <WebHooksListItem key={webhook.id} webhook={webhook} />
         ))}
+        <div ref={observerRef}>
+          {isFetchingNextPage && <WebhooksListSkeletonItem />}
+        </div>
       </div>
     </div>
   );

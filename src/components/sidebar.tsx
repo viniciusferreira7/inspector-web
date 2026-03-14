@@ -1,15 +1,14 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { CopyIcon } from "lucide-react";
-import { Suspense } from "react";
 import { env } from "../env";
 import { webhookDetails } from "../http/schemas/webhook-details";
 import { IconButton } from "./ui/icon-button";
-import { WebhooksList, WebhooksListSkeleton } from "./webhooks-list";
+import { WebhooksList } from "./webhooks-list";
 
 export function Sidebar() {
   const { id } = useParams({ strict: false });
-  const { data, isLoading } = useInfiniteQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["webhooks", id],
     enabled: !!id,
     queryFn: async () => {
@@ -43,9 +42,7 @@ export function Sidebar() {
           <IconButton icon={<CopyIcon className="size-4" />} />
         </div>
       )}
-      <Suspense fallback={<WebhooksListSkeleton />}>
-        <WebhooksList />
-      </Suspense>
+      <WebhooksList />
     </div>
   );
 }
