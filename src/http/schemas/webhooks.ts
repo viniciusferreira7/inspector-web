@@ -11,3 +11,5 @@ export const webhookListSchema = z.object({
   webhooks: z.array(webhookListItemSchema),
   nextCursor: z.uuidv7().nullable(),
 });
+
+export type WebhookListPage = z.infer<typeof webhookListSchema>;
