@@ -10,43 +10,43 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as IdIndexRouteImport } from './routes/$id/index'
+import { Route as WebhooksIdIndexRouteImport } from './routes/webhooks/$id/index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IdIndexRoute = IdIndexRouteImport.update({
-  id: '/$id/',
-  path: '/$id/',
+const WebhooksIdIndexRoute = WebhooksIdIndexRouteImport.update({
+  id: '/webhooks/$id/',
+  path: '/webhooks/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$id': typeof IdIndexRoute
+  '/webhooks/$id': typeof WebhooksIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/$id': typeof IdIndexRoute
+  '/webhooks/$id': typeof WebhooksIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/$id/': typeof IdIndexRoute
+  '/webhooks/$id/': typeof WebhooksIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/$id'
+  fullPaths: '/' | '/webhooks/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/$id'
-  id: '__root__' | '/' | '/$id/'
+  to: '/' | '/webhooks/$id'
+  id: '__root__' | '/' | '/webhooks/$id/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  IdIndexRoute: typeof IdIndexRoute
+  WebhooksIdIndexRoute: typeof WebhooksIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -58,11 +58,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/$id/': {
-      id: '/$id/'
-      path: '/$id'
-      fullPath: '/$id'
-      preLoaderRoute: typeof IdIndexRouteImport
+    '/webhooks/$id/': {
+      id: '/webhooks/$id/'
+      path: '/webhooks/$id'
+      fullPath: '/webhooks/$id'
+      preLoaderRoute: typeof WebhooksIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
@@ -70,7 +70,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  IdIndexRoute: IdIndexRoute,
+  WebhooksIdIndexRoute: WebhooksIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

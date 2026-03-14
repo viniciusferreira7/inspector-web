@@ -1,13 +1,13 @@
 import { createFileRoute, useParams } from "@tanstack/react-router";
-import { WebhookDetails } from "./_compoenents/webhook-details";
+import { WebhookDetails } from "./_components/webhook-details";
 
-export const Route = createFileRoute("/$id/")({
+export const Route = createFileRoute("/webhooks/$id/")({
   component: Index,
 });
 
 function Index() {
   const { id } = useParams({
-    from: "/$id/",
+    from: "/webhooks/$id/",
   });
 
   return <WebhookDetails id={id} />;

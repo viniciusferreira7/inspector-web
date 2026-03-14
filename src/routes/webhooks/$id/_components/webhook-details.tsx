@@ -1,10 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { SectionDataTable } from "../../../components/section-data-table";
-import { SectionTitle } from "../../../components/section-title";
-import { CodeBlock } from "../../../components/ui/code-block";
-import { WebhookDetailsHeader } from "../../../components/webhook-details-header";
-import { env } from "../../../env";
-import { webhookDetails } from "../../../http/schemas/webhook-details";
+import { SectionDataTable } from "../../../../components/section-data-table";
+import { SectionTitle } from "../../../../components/section-title";
+import { CodeBlock } from "../../../../components/ui/code-block";
+import { WebhookDetailsHeader } from "../../../../components/webhook-details-header";
+import { env } from "../../../../env";
+import { webhookDetails } from "../../../../http/schemas/webhook-details";
 import { WebhookDetailsSkeleton } from "./webhook-details-skeleton";
 import { WebhookNotFound } from "./webhook-not-found";
 
