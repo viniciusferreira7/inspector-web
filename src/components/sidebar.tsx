@@ -8,11 +8,10 @@ import { IconButton } from "./ui/icon-button";
 import { WebhooksList, WebhooksListSkeleton } from "./webhooks-list";
 
 export function Sidebar() {
-  const { id } = useParams({
-    from: "/webhooks/$id/",
-  });
+  const { id } = useParams({ strict: false });
   const { data, isLoading } = useQuery({
     queryKey: ["webhooks", id],
+    enabled: !!id,
     queryFn: async () => {
       const response = await fetch(`${env.VITE_API_URL}/webhooks/${id}`);
       const json = await response.json();
@@ -35,7 +34,8 @@ export function Sidebar() {
             <div className="h-3.5 w-48 animate-pulse rounded bg-zinc-700" />
           ) : (
             <span className="truncate">
-              {env.VITE_API_URL}/{data?.pathname}
+              {env.VITE_API_URL}
+              {data?.pathname}
             </span>
           )}
         </div>
