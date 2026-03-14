@@ -39,18 +39,24 @@ export function WebhookDetails({ id }: { id: string }) {
             <SectionTitle>Request Overview</SectionTitle>
             <SectionDataTable data={overviewData} />
           </div>
-          <div className="space-y-4">
-            <SectionTitle>Query parameters</SectionTitle>
-            {data?.queryParams && <SectionDataTable data={data?.queryParams} />}
-          </div>
-          <div className="space-y-4">
-            <SectionTitle>Headers</SectionTitle>
-            <SectionDataTable data={data.headers} />
-          </div>
-          <div className="space-y-4">
-            <SectionTitle>Request Body</SectionTitle>
-            <CodeBlock code={data.body} />
-          </div>
+          {data?.queryParams && (
+            <div className="space-y-4">
+              <SectionTitle>Query parameters</SectionTitle>
+              <SectionDataTable data={data?.queryParams} />
+            </div>
+          )}
+          {data.headers && (
+            <div className="space-y-4">
+              <SectionTitle>Headers</SectionTitle>
+              <SectionDataTable data={data.headers} />
+            </div>
+          )}
+          {data.body && (
+            <div className="space-y-4">
+              <SectionTitle>Request Body</SectionTitle>
+              <CodeBlock code={data.body} />
+            </div>
+          )}
         </div>
       </div>
     </div>
